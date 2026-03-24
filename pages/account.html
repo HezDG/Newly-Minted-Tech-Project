@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newly Minted — Account</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="site-header glass">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">◈</span>
+      <span>Newly Minted</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="products.html">Shop</a>
+      <a href="account.html" class="active">Account</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
+        ❤ <span class="count-pill" id="wishlistCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Cart">
+        🛒 <span class="count-pill" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container section-gap">
+    <div class="account-layout">
+      <section class="account-card glass reveal-up">
+        <div class="profile-head">
+          <img id="profilePreview" class="avatar-large" src="../assets/default-avatar.svg" alt="Profile avatar" />
+          <div>
+            <div class="eyebrow">Local profile system</div>
+            <h1 id="welcomeName">Welcome</h1>
+            <p class="muted">Saved securely on this device for faster sign-ins.</p>
+          </div>
+        </div>
+
+        <form id="accountForm" class="account-form">
+          <div class="field-group">
+            <label for="username">Username</label>
+            <input id="username" class="text-input" type="text" placeholder="Enter username" required />
+          </div>
+          <div class="field-group">
+            <label for="password">Password</label>
+            <input id="password" class="text-input" type="password" placeholder="Enter password" required />
+          </div>
+          <div class="field-group">
+            <label for="avatarUpload">Profile picture</label>
+            <input id="avatarUpload" class="text-input file-input" type="file" accept="image/*" />
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save account</button>
+            <button class="btn btn-secondary" type="button" id="resetAccount">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="glass side-panel reveal-up delay-1">
+        <div class="eyebrow">Included account features</div>
+        <ul class="clean-list">
+          <li>Default avatar fallback</li>
+          <li>Local username + password storage</li>
+          <li>Image upload with auto preview</li>
+          <li>Persistent welcome display</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <div class="drawer glass" id="miniCartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Your cart</h3>
+      <button class="icon-btn" data-close-drawer>✕</button>
+    </div>
+    <div id="miniCartItems" class="drawer-list"></div>
+    <div id="miniCartSummary" class="drawer-summary"></div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/account.js"></script>
+</body>
+</html>

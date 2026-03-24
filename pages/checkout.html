@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newly Minted — Shipping</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="site-header glass">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">◈</span>
+      <span>Newly Minted</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="products.html">Shop</a>
+      <a href="account.html">Account</a>
+      <a href="checkout.html" class="active">Shipping</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
+        ❤ <span class="count-pill" id="wishlistCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Cart">
+        🛒 <span class="count-pill" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container section-gap">
+    <div class="section-head reveal-up">
+      <div>
+        <div class="eyebrow">Checkout</div>
+        <h1>Shipping & order review</h1>
+      </div>
+    </div>
+
+    <section class="checkout-layout">
+      <div class="checkout-stack">
+        <section class="panel-block glass reveal-up">
+          <div class="eyebrow">Delivery details</div>
+          <form id="shippingForm" class="account-form">
+            <div class="two-col">
+              <div class="field-group">
+                <label for="firstName">First name</label>
+                <input id="firstName" name="firstName" class="text-input" type="text" placeholder="First name" required />
+              </div>
+              <div class="field-group">
+                <label for="lastName">Last name</label>
+                <input id="lastName" name="lastName" class="text-input" type="text" placeholder="Last name" required />
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" class="text-input" type="email" placeholder="name@example.com" required />
+            </div>
+            <div class="field-group">
+              <label for="phone">Mobile number</label>
+              <input id="phone" name="phone" class="text-input" type="tel" placeholder="09XX XXX XXXX" required />
+            </div>
+            <div class="field-group">
+              <label for="address">Street address</label>
+              <input id="address" name="address" class="text-input" type="text" placeholder="House number, street, barangay" required />
+            </div>
+            <div class="two-col">
+              <div class="field-group">
+                <label for="city">City</label>
+                <input id="city" name="city" class="text-input" type="text" placeholder="Quezon City" required />
+              </div>
+              <div class="field-group">
+                <label for="province">Province</label>
+                <input id="province" name="province" class="text-input" type="text" placeholder="Metro Manila" required />
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field-group">
+                <label for="postalCode">Postal code</label>
+                <input id="postalCode" name="postalCode" class="text-input" type="text" placeholder="1101" required />
+              </div>
+              <div class="field-group">
+                <label for="deliveryNotes">Delivery notes</label>
+                <input id="deliveryNotes" name="deliveryNotes" class="text-input" type="text" placeholder="Gate code, landmarks, or call ahead" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Save shipping details</button>
+              <a class="btn btn-secondary" href="products.html">Continue shopping</a>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel-block glass reveal-up delay-1">
+          <div class="eyebrow">Cart items</div>
+          <div id="checkoutItems" class="checkout-items"></div>
+        </section>
+      </div>
+
+      <aside class="checkout-side">
+        <section class="panel-block glass reveal-up delay-2">
+          <div class="eyebrow">Order summary</div>
+          <div id="checkoutSummary"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="drawer glass" id="miniCartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Your cart</h3>
+      <button class="icon-btn" data-close-drawer>✕</button>
+    </div>
+    <div id="miniCartItems" class="drawer-list"></div>
+    <div id="miniCartSummary" class="drawer-summary"></div>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

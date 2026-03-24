@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newly Minted — Shop</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <header class="site-header glass">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">◈</span>
+      <span>Newly Minted</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="products.html" class="active">Shop</a>
+      <a href="account.html">Account</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
+        ❤ <span class="count-pill" id="wishlistCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Cart">
+        🛒 <span class="count-pill" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container section-gap">
+    <div class="section-head reveal-up">
+      <div>
+        <div class="eyebrow">Smart filtering</div>
+        <h1>Shop all tech</h1>
+      </div>
+    </div>
+
+    <section class="catalog-layout">
+      <aside class="filters glass reveal-up">
+        <div class="field-group">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" class="text-input" type="text" placeholder="Search products..." />
+        </div>
+
+        <div class="field-group">
+          <label>Category</label>
+          <div class="custom-select" data-select="category">
+            <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="select-left"><span class="select-icon">🧭</span><span class="select-label">All categories</span></span>
+              <span class="select-caret">⌄</span>
+            </button>
+            <div class="select-menu glass" role="listbox">
+              <button class="select-option selected" data-value="All" data-icon="🧭">All categories</button>
+              <button class="select-option" data-value="Laptop" data-icon="💻">Laptop</button>
+              <button class="select-option" data-value="Audio" data-icon="🎧">Audio</button>
+              <button class="select-option" data-value="Mobile" data-icon="📱">Mobile</button>
+              <button class="select-option" data-value="Accessory" data-icon="⌨">Accessory</button>
+              <button class="select-option" data-value="Desktop" data-icon="🖥">Desktop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Sort by</label>
+          <div class="custom-select" data-select="sort">
+            <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="select-left"><span class="select-icon">↕</span><span class="select-label">Featured</span></span>
+              <span class="select-caret">⌄</span>
+            </button>
+            <div class="select-menu glass" role="listbox">
+              <button class="select-option selected" data-value="featured" data-icon="★">Featured</button>
+              <button class="select-option" data-value="price-asc" data-icon="⬆">Price: low to high</button>
+              <button class="select-option" data-value="price-desc" data-icon="⬇">Price: high to low</button>
+              <button class="select-option" data-value="name" data-icon="🔤">Name</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <div id="productGrid" class="product-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="drawer glass" id="miniCartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Your cart</h3>
+      <button class="icon-btn" data-close-drawer>✕</button>
+    </div>
+    <div id="miniCartItems" class="drawer-list"></div>
+    <div id="miniCartSummary" class="drawer-summary"></div>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
