@@ -74,7 +74,20 @@ function getCartCount() {
 }
 
 function getWishlist() {
-  return readStore(STORE_KEYS.wishlist, []);
+  const wishlist = readStore(STORE_KEYS.wishlist, []);
+  const normalized = Array.isArray(wishlist)
+    ? [...new Set(wishlist.map(id => Number(id)).filter(id => Number.isFinite(id)))]
+    : [];
+  writeStore(STORE_KEYS.wishlist, normalized);
+  return normalized;
+}
+
+function writeWishlist(wishlist) {
+  writeStore(STORE_KEYS.wishlist, [...new Set(wishlist.map(id => Number(id)).filter(id => Number.isFinite(id)))]);
+}
+
+function getWishlistDetailedItems() {
+  return getWishlist().map(id => PRODUCTS.find(product => product.id === id)).filter(Boolean);
 }
 
 function syncCounts() {
@@ -97,10 +110,31 @@ function addToCart(productId) {
 
 function addToWishlist(productId) {
   const wishlist = getWishlist();
-  if (!wishlist.includes(productId)) wishlist.push(productId);
-  writeStore(STORE_KEYS.wishlist, wishlist);
+  if (wishlist.includes(productId)) {
+    showToast('Already in wishlist');
+    renderWishlist();
+    return;
+  }
+  wishlist.push(productId);
+  writeWishlist(wishlist);
   syncCounts();
+  renderWishlist();
+  renderProducts();
   showToast('Saved to wishlist');
+}
+
+function removeFromWishlist(productId) {
+  const wishlist = getWishlist().filter(id => id !== productId);
+  writeWishlist(wishlist);
+  syncCounts();
+  renderWishlist();
+  renderProducts();
+  showToast('Removed from wishlist');
+}
+
+function moveWishlistItemToCart(productId) {
+  addToCart(productId);
+  removeFromWishlist(productId);
 }
 
 function updateCartQty(productId, nextQty) {
@@ -162,7 +196,7 @@ function renderProducts() {
           </div>
           <div class="card-actions">
             <button class="btn btn-primary" data-cart="${product.id}">Add to cart</button>
-            <button class="btn btn-secondary" data-wishlist="${product.id}">Wishlist</button>
+            <button class="btn btn-secondary" data-wishlist="${product.id}">${getWishlist().includes(product.id) ? 'Saved' : 'Wishlist'}</button>
           </div>
         </div>
       </article>
@@ -230,6 +264,45 @@ function setupCustomSelects(handlers = {}) {
   });
 }
 
+function renderWishlist() {
+  const host = document.getElementById('wishlistItems');
+  const summaryHost = document.getElementById('wishlistSummary');
+  if (!host) return;
+
+  const items = getWishlistDetailedItems();
+  host.innerHTML = items.length ? items.map(item => `
+    <div class="drawer-item">
+      <img src="${getAssetPath(item.image)}" alt="${item.name}" />
+      <div class="drawer-copy">
+        <strong>${item.name}</strong>
+        <div class="muted">${item.category}</div>
+        <div class="muted">${formatPHP(item.pricePHP)}</div>
+        <div class="drawer-qty-row">
+          <button class="link-btn" data-wishlist-cart="${item.id}">Move to cart</button>
+          <button class="link-btn" data-remove-wishlist="${item.id}">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('') : '<p class="muted">Your wishlist is empty.</p>';
+
+  if (summaryHost) {
+    const total = items.reduce((sum, item) => sum + item.pricePHP, 0);
+    summaryHost.innerHTML = items.length ? `
+      <div class="summary-line"><span>Saved items</span><strong>${items.length}</strong></div>
+      <div class="summary-line total"><span>Total value</span><strong>${formatPHP(total)}</strong></div>
+      <a class="btn btn-primary btn-block" href="${location.pathname.includes('/pages/') ? 'products.html' : 'pages/products.html'}">Continue shopping</a>
+    ` : '<div class="summary-line total"><span>Saved items</span><strong>0</strong></div>';
+  }
+
+  host.querySelectorAll('[data-wishlist-cart]').forEach(button => {
+    button.addEventListener('click', () => moveWishlistItemToCart(Number(button.dataset.wishlistCart)));
+  });
+
+  host.querySelectorAll('[data-remove-wishlist]').forEach(button => {
+    button.addEventListener('click', () => removeFromWishlist(Number(button.dataset.removeWishlist)));
+  });
+}
+
 function renderMiniCart() {
   const host = document.getElementById('miniCartItems');
   const summaryHost = document.getElementById('miniCartSummary');
@@ -278,18 +351,34 @@ function renderMiniCart() {
 }
 
 function setupDrawer() {
-  const drawer = document.getElementById('miniCartDrawer');
-  if (!drawer) return;
+  const cartDrawer = document.getElementById('miniCartDrawer');
+  const wishlistDrawer = document.getElementById('wishlistDrawer');
 
-  document.getElementById('cartBtn')?.addEventListener('click', () => {
-    drawer.classList.toggle('open');
-    drawer.setAttribute('aria-hidden', String(!drawer.classList.contains('open')));
-    renderMiniCart();
-  });
-
-  document.querySelector('[data-close-drawer]')?.addEventListener('click', () => {
+  const closeDrawer = drawer => {
+    if (!drawer) return;
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
+  };
+
+  const openDrawer = (drawer, renderFn, otherDrawer) => {
+    if (!drawer) return;
+    const willOpen = !drawer.classList.contains('open');
+    closeDrawer(otherDrawer);
+    drawer.classList.toggle('open', willOpen);
+    drawer.setAttribute('aria-hidden', String(!willOpen));
+    if (willOpen) renderFn?.();
+  };
+
+  document.getElementById('cartBtn')?.addEventListener('click', () => {
+    openDrawer(cartDrawer, renderMiniCart, wishlistDrawer);
+  });
+
+  document.getElementById('wishlistBtn')?.addEventListener('click', () => {
+    openDrawer(wishlistDrawer, renderWishlist, cartDrawer);
+  });
+
+  document.querySelectorAll('[data-close-drawer]').forEach(button => {
+    button.addEventListener('click', () => closeDrawer(button.closest('.drawer')));
   });
 }
 
@@ -373,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
   syncCounts();
   renderProducts();
   renderMiniCart();
+  renderWishlist();
   renderCheckoutPage();
   setupDrawer();
 });
