@@ -5,12 +5,12 @@ const STORE_KEYS = {
 };
 
 const PRODUCTS = [
-  { id: 1, name: 'AetherBook Pro 14', category: 'Laptop', priceUSD: 1399, image: '../assets/laptop.svg' },
-  { id: 2, name: 'MintPods Max', category: 'Audio', priceUSD: 249, image: '../assets/audio.svg' },
-  { id: 3, name: 'CyanPhone X', category: 'Mobile', priceUSD: 899, image: '../assets/mobile.svg' },
-  { id: 4, name: 'Vector Keys 75', category: 'Accessory', priceUSD: 129, image: '../assets/keyboard.svg' },
-  { id: 5, name: 'NovaStation One', category: 'Desktop', priceUSD: 1799, image: '../assets/desktop.svg' },
-  { id: 6, name: 'PulseMouse Air', category: 'Accessory', priceUSD: 79, image: '../assets/mouse.svg' },
+  { id: 1, name: 'Legion 9i Gen 9 (16″ Intel) Gaming Laptop', category: 'Laptop', priceUSD: 1399, image: 'https://p2-ofp.static.pub/ShareResource/na/products/legion/584x584/lenovo-legion-9-gen-9-01.png?width=400&height=400' },
+  { id: 2, name: 'SE846 Gen 2', category: 'Audio', priceUSD: 249, image: 'https://products.shureweb.eu/cdn-cgi/image/width=1380,height=1380,format=auto/shure_product_db/product_images/files/35f/9c0/aa-/original/7b97831f8f26a63b8164cf8fe84fd4e9.webp' },
+  { id: 3, name: 'ROG Phone 8', category: 'Mobile', priceUSD: 899, image: 'https://dlcdnwebimgs.asus.com/gain/DCB7E40C-CB0E-45CD-8BF8-6E8E7E71BCE7' },
+  { id: 4, name: 'Wooting 60HE', category: 'Accessory', priceUSD: 129, image: 'https://mechanicalkeyboards.com/cdn/shop/files/22138-4RAS5-Wooting-60HE.png?v=1721058249' },
+  { id: 5, name: 'Alienware Aurora R16', category: 'Desktop', priceUSD: 1799, image: 'https://cdn.thisiswhyimbroke.com/images/alienware-aurora-r16-gaming-desktop-dell-640x534.jpg' },
+  { id: 6, name: 'Onikuma CW935', category: 'Accessory', priceUSD: 79, image: 'https://assets.innpro.pl/18877/25135/Onikuma-mouse-CW935-tri-mode-mysz-komputerowa-czarna-lifestyle.jpg' },
 ].map(product => ({ ...product, pricePHP: Math.round(product.priceUSD * EXCHANGE_RATE_PHP) }));
 
 function getAssetPath(path) {
